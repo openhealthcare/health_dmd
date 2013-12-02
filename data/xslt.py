@@ -9,8 +9,7 @@ from lxml import etree
 HERE = ffs.Path.here()
 DRUGFILE = HERE/'f_amp2_3281113.xml'
 
-XML = """
-<?xml version="1.0" encoding="utf-8"?>
+XML = """<?xml version="1.0" encoding="utf-8"?>
 <tryton>
 <data noupdate="1">
 
@@ -21,7 +20,7 @@ XML = """
     <field name="name">Medicaments</field>
 </record>
 <record model="product.category" id="prod_medicament_DMD">
-    <field name="name">DM&D Medicines</field>
+    <field name="name">DM+D Medicines</field>
     <field name="parent" ref="prod_medicament"/>
 </record>
 
@@ -56,7 +55,7 @@ def main():
     templates, products = [], []
     root = etree.fromstring(DRUGFILE.contents)
     for num, drug in enumerate(root.findall('AMPS/AMP'), 1):
-        name = drug.find('NM').text
+        name = drug.find('NM').text.replace('&', '+')
 
         templates.append(XML_TEMPLATE_TEMPLATE.format(num=num, name=name))
         products.append(XML_PRODUCT_TEMPLATE.format(num=num))
