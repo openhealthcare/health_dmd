@@ -55,7 +55,7 @@ def main():
     templates, products = [], []
     root = etree.fromstring(DRUGFILE.contents)
     for num, drug in enumerate(root.findall('AMPS/AMP'), 1):
-        name = drug.find('NM').text.replace('&', '+')
+        name = drug.find('NM').text.replace('&', 'and')
 
         templates.append(XML_TEMPLATE_TEMPLATE.format(num=num, name=name))
         products.append(XML_PRODUCT_TEMPLATE.format(num=num))
